@@ -26,22 +26,38 @@ def Authenticate():
 
 @app.route('/')
 def index():
-    return render_template('login.html',message="")
+    return render_template('login.html')
 
+#import pymysql as sql
+#import flask
 
 @app.route('/Authenticate', methods = ['POST','GET'])
 def Authenticate():
-    message = ''
+    message =''
     if request.method == 'POST':
-        username = request.form.get('username')  # access the data inside
-        password = request.form.get('password')
+        user = request.form['username'] # access the data inside
+        pwd = request.form['password']
 
-        if username == 'root' and password == 'pass':
-            message = "Correct username and password"
+        conn = sql.connect(host='localhost', port=3306, user='root', password='root123', db='DbmsProject')
+        cursor = conn.cursor();
+        cursor.execute("SELECT Password FROM examples WHERE Username = username ")
+        result = (cursor.fetchall()[0][0])
+        print(result)
+        print(pwd)
+
+        if(result == pwd):
+            return render_template('result.html',message="Correct")
         else:
-            message = "Wrong username or password"
+            return render_template('result.html', message="Wrong")
+        # print(cursor
+        #      .fetchall())
 
-    return render_template('result.html', message=message)
+        #if username == 'result' and password == '':
+         #   message = "Correct username and password"
+        #else:
+         #   message = "Wrong username or password"
+
+
 
 
 

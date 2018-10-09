@@ -82,14 +82,12 @@ border-width: 5px;
 </style>
 </head>
 <body>
-{% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+
 <div class='wrap'>
   Login
     <form action="{{ url_for('Authenticate') }}" method="POST" >
-        <input type='text' id='username' placeholder='Username'>
-        <input type='password' id='password' placeholder='Password'>
+        <input type='text' name='username' placeholder='Username'>
+        <input type='password' name='password' placeholder='Password'>
          <input class="button" type="submit" value="Log In" />
     </form>
 
